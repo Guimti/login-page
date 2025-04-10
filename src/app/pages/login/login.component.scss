@@ -1,0 +1,59 @@
+:host {
+    display: block;
+    height: 100vh;
+    background: linear-gradient(135deg, #7001FD, #1E2772);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, 
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+        backdrop-filter: blur(10px);
+        z-index: 1;
+    }
+
+    app-default-login-layout {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: block;
+    }
+}
+
+// Animação de entrada
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+:host ::ng-deep {
+    app-default-login-layout {
+        animation: fadeIn 0.6s ease-out;
+    }
+}

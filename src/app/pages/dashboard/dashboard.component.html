@@ -1,0 +1,180 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <h1>CursoFácil</h1>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul>
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/courses" routerLinkActive="active">
+            <i class="fas fa-book"></i>
+            <span>Meus Cursos</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/students" routerLinkActive="active">
+            <i class="fas fa-users"></i>
+            <span>Alunos</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/analytics" routerLinkActive="active">
+            <i class="fas fa-chart-line"></i>
+            <span>Análises</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/settings" routerLinkActive="active">
+            <i class="fas fa-cog"></i>
+            <span>Configurações</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="user-info">
+      <img src="assets/images/avatar-placeholder.png" alt="Avatar" class="avatar">
+      <div class="user-details">
+        <span class="name">{{username}}</span>
+        <span class="email">{{username}}&#64;exemplo.com</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-bar">
+      <div class="page-title">
+        <h1>Dashboard</h1>
+        <p>Gerencie seus cursos e acompanhe seu desempenho</p>
+      </div>
+      
+      <button class="btn-primary" (click)="openCourseCreator()">
+        <i class="fas fa-plus"></i>
+        Criar Novo Curso
+      </button>
+    </header>
+
+    <div class="content">
+      <div class="tabs">
+        <button class="tab active">Todos os Cursos</button>
+        <button class="tab">Publicados</button>
+        <button class="tab">Rascunhos</button>
+        <button class="tab">Arquivados</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3>Total de Cursos</h3>
+            <div class="stat-value">4</div>
+            <div class="stat-trend positive">
+              <i class="fas fa-arrow-up"></i>
+              +50% 2 novos este mês
+            </div>
+          </div>
+          <div class="stat-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3>Total de Alunos</h3>
+            <div class="stat-value">120</div>
+            <div class="stat-trend positive">
+              <i class="fas fa-arrow-up"></i>
+              +12% 15 novos este mês
+            </div>
+          </div>
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3>Receita Total</h3>
+            <div class="stat-value">R$ 3.240,00</div>
+            <div class="stat-trend positive">
+              <i class="fas fa-arrow-up"></i>
+              +8% Último mês
+            </div>
+          </div>
+          <div class="stat-icon">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3>Taxa de Conclusão</h3>
+            <div class="stat-value">68%</div>
+            <div class="stat-trend positive">
+              <i class="fas fa-arrow-up"></i>
+              +5% maior que o mês anterior
+            </div>
+          </div>
+          <div class="stat-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="courses-section">
+        <div class="section-header">
+          <h2>Seus Cursos</h2>
+          <div class="actions">
+            <div class="search-bar">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Buscar cursos...">
+            </div>
+            <button class="btn-secondary">Importar Curso</button>
+            <button class="btn-primary" (click)="openCourseCreator()">
+              <i class="fas fa-plus"></i>
+              Criar Novo Curso
+            </button>
+          </div>
+        </div>
+
+        <div class="courses-grid">
+          <!-- Course Card -->
+          <div class="course-card">
+            <div class="course-image">
+              <img src="assets/images/marketing-digital.jpg" alt="Marketing Digital">
+              <div class="status published">Publicado</div>
+            </div>
+            <div class="course-content">
+              <h3>Fundamentos de Marketing Digital</h3>
+              <p>Aprenda os princípios básicos do marketing digital e como aplicá-los em seu negócio.</p>
+              <div class="course-stats">
+                <span><i class="fas fa-book"></i> 12 aulas</span>
+                <span><i class="fas fa-users"></i> 45 alunos</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 100%"></div>
+              </div>
+              <div class="course-actions">
+                <button class="btn-icon"><i class="fas fa-edit"></i> Editar</button>
+                <button class="btn-icon"><i class="fas fa-eye"></i> Visualizar</button>
+                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repeat similar course cards for other courses -->
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<app-course-creator *ngIf="showCourseCreator" (close)="closeCourseCreator()"></app-course-creator> 

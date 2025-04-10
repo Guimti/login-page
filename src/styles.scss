@@ -1,10 +1,73 @@
+// Variables
+$primary: #7C3AED;
+$primary-dark: #6D28D9;
+$primary-light: #8B5CF6;
+$neutral-900: #111827;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", "Poppins", sans-serif;
 }
 
 html, body {
     height: 100%;
+    background-color: $neutral-900;
+    color: white;
+}
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+// Reset default styles for form elements
+input, textarea, select, button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+// Global form styles
+.form-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Global button styles
+.btn-primary, .btn-secondary {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: $primary;
+    color: white;
+    border: none;
+
+    &:hover {
+        background: $primary-dark;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
 }

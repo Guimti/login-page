@@ -1,0 +1,218 @@
+<div class="course-creator-overlay" (click)="closeCard()"></div>
+<div class="course-creator-card">
+  <div class="card-header">
+    <h2>Criar Novo Curso</h2>
+    <button class="close-button" (click)="closeCard()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="progress-steps">
+    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+      <div class="step-number">1</div>
+      <div class="step-label">Informações Básicas</div>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+      <div class="step-number">2</div>
+      <div class="step-label">Conteúdo</div>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step" [class.active]="currentStep === 3">
+      <div class="step-number">3</div>
+      <div class="step-label">Configurações</div>
+    </div>
+  </div>
+
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="form-container">
+    <!-- Etapa 1: Informações Básicas -->
+    <div class="form-section" [class.active]="currentStep === 1">
+      <div class="section-header">
+        <h3>Informações Básicas</h3>
+        <p>Defina as informações principais do seu curso</p>
+      </div>
+
+      <div class="form-content">
+        <!-- Upload de Imagem -->
+        <div class="image-upload-section">
+          <label>Imagem de Capa</label>
+          <div class="image-upload" [class.has-image]="selectedImage" (click)="fileInput.click()">
+            <input #fileInput type="file" accept="image/*" (change)="onImageSelected($event)" hidden>
+            <div class="upload-content" *ngIf="!selectedImage">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Clique para adicionar uma imagem de capa</p>
+              <span>Recomendado: 1280x720px</span>
+            </div>
+            <div class="image-preview" *ngIf="selectedImage">
+              <img [src]="selectedImage" alt="Preview">
+              <div class="image-overlay">
+                <i class="fas fa-camera"></i>
+                <span>Alterar Imagem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos do Formulário -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="title">Título do Curso <span class="required">*</span></label>
+            <input 
+              id="title"
+              type="text"
+              formControlName="title"
+              placeholder="Ex: Desenvolvimento Web Completo"
+              [class.error]="courseForm.get('title')?.invalid && courseForm.get('title')?.touched"
+            >
+            <div class="field-hint">
+              <span class="char-count">{{courseForm.get('title')?.value?.length || 0}}/{{maxTitleLength}}</span>
+            </div>
+            <div class="error-message" *ngIf="courseForm.get('title')?.invalid && courseForm.get('title')?.touched">
+              <span *ngIf="courseForm.get('title')?.errors?.['required']">Título é obrigatório</span>
+              <span *ngIf="courseForm.get('title')?.errors?.['maxlength']">Máximo de {{maxTitleLength}} caracteres</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Categoria <span class="required">*</span></label>
+            <select 
+              id="category"
+              formControlName="category"
+              [class.error]="courseForm.get('category')?.invalid && courseForm.get('category')?.touched"
+            >
+              <option value="" disabled>Selecione uma categoria</option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{category.name}}
+              </option>
+            </select>
+            <div class="error-message" *ngIf="courseForm.get('category')?.invalid && courseForm.get('category')?.touched">
+              <span>Categoria é obrigatória</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descrição <span class="required">*</span></label>
+          <textarea 
+            id="description"
+            formControlName="description"
+            placeholder="Descreva o que os alunos irão aprender"
+            [class.error]="courseForm.get('description')?.invalid && courseForm.get('description')?.touched"
+            rows="4"
+          ></textarea>
+          <div class="field-hint">
+            <span class="char-count">{{courseForm.get('description')?.value?.length || 0}}/{{maxDescriptionLength}}</span>
+          </div>
+          <div class="error-message" *ngIf="courseForm.get('description')?.invalid && courseForm.get('description')?.touched">
+            <span *ngIf="courseForm.get('description')?.errors?.['required']">Descrição é obrigatória</span>
+            <span *ngIf="courseForm.get('description')?.errors?.['maxlength']">Máximo de {{maxDescriptionLength}} caracteres</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etapa 2: Conteúdo -->
+    <div class="form-section" [class.active]="currentStep === 2">
+      <div class="section-header">
+        <h3>Conteúdo do Curso</h3>
+        <p>Organize o material do seu curso</p>
+      </div>
+
+      <div class="form-content">
+        <div class="form-group">
+          <label for="level">Nível do Curso <span class="required">*</span></label>
+          <select 
+            id="level"
+            formControlName="level"
+            [class.error]="courseForm.get('level')?.invalid && courseForm.get('level')?.touched"
+          >
+            <option value="" disabled>Selecione o nível</option>
+            <option *ngFor="let level of levels" [value]="level.id">
+              {{level.name}}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="courseForm.get('level')?.invalid && courseForm.get('level')?.touched">
+            <span>Nível é obrigatório</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags">Tags do Curso</label>
+          <div class="tags-container">
+            <div class="tags-list">
+              <div class="tag" *ngFor="let tag of tags">
+                {{tag}}
+                <button type="button" (click)="removeTag(tag)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <input 
+              type="text" 
+              id="tags"
+              placeholder="Digite uma tag e pressione Enter"
+              (keyup)="addTag($event)"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Etapa 3: Configurações -->
+    <div class="form-section" [class.active]="currentStep === 3">
+      <div class="section-header">
+        <h3>Configurações</h3>
+        <p>Configure as opções de publicação</p>
+      </div>
+
+      <div class="form-content">
+        <div class="settings-group">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h4>Visibilidade do Curso</h4>
+              <p>Defina se o curso ficará visível para os alunos</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" formControlName="isPublic">
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">{{courseForm.get('isPublic')?.value ? 'Público' : 'Privado'}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões de Navegação -->
+    <div class="form-footer">
+      <button 
+        type="button" 
+        class="btn-secondary" 
+        (click)="previousStep()"
+        *ngIf="currentStep > 1"
+      >
+        <i class="fas fa-arrow-left"></i>
+        Voltar
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn-primary" 
+        (click)="nextStep()"
+        *ngIf="currentStep < 3"
+      >
+        Próximo
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <button 
+        type="submit" 
+        class="btn-primary" 
+        [disabled]="courseForm.invalid"
+        *ngIf="currentStep === 3"
+      >
+        <i class="fas fa-check"></i>
+        Criar Curso
+      </button>
+    </div>
+  </form>
+</div> 
